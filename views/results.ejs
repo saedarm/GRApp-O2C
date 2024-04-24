@@ -15,37 +15,41 @@
         <img id="gender-image-1" src="/gender_reveal_1.jpg" alt="Gender Reveal 1" width="400" style="display: none;">
         <img id="gender-image-2" src="/gender_reveal_2.jpg" alt="Gender Reveal 2" width="400" style="display: none;">
     </div>
-    <div id="countdown">Countdown: <span id="timer">10</span> seconds</div>
-    <script>
-        // Countdown timer
-        var countdownElement = document.getElementById('timer');
-        var countdown = 10; // Countdown time in seconds
-        var countdownInterval = setInterval(function () {
-            countdown--;
-            countdownElement.textContent = countdown;
-            if (countdown <= 0) {
-                clearInterval(countdownInterval);
-                if (secret === 'boy') {
-                    document.getElementById('gender-image-1').style.display = 'block';
-                } else {
-                    document.getElementById('gender-image-2').style.display = 'block';
+    <div id="countdown" style="display: none;">Countdown: <span id="timer">10</span> seconds</div>
+    <% if (secret) { %>
+        <script>
+            // Countdown timer
+            var countdownElement = document.getElementById('timer');
+            var countdown = 10; // Countdown time in seconds
+            var countdownInterval = setInterval(function () {
+                countdown--;
+                countdownElement.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    if (secret === 'boy') {
+                        document.getElementById('gender-image-1').style.display = 'block';
+                    } else {
+                        document.getElementById('gender-image-2').style.display = 'block';
+                    }
+                    document.getElementById('reveal-image').querySelector('img').style.display = 'none';
+                    document.getElementById('secret-revealed').textContent = 'Secret Revealed: <%= secret %>';
                 }
-                document.getElementById('reveal-image').querySelector('img').style.display = 'none';
-                document.getElementById('secret-revealed').textContent = 'Secret Revealed: <%= secret %>';
-            }
-        }, 1000);
-    </script>
-    <% if (wellWishes.length> 0) { %>
-        <h2>Well Wishes</h2>
-        <ul>
-            <% wellWishes.forEach(function(wish) { %>
-                <li>
-                    <%= wish %>
-                </li>
-                <% }); %>
-        </ul>
+            }, 1000);
+            // Show countdown
+            document.getElementById('countdown').style.display = 'block';
+        </script>
         <% } %>
-            <a href="/wellwishes">Send Well Wishes</a>
+            <% if (wellWishes.length> 0) { %>
+                <h2>Well Wishes</h2>
+                <ul>
+                    <% wellWishes.forEach(function(wish) { %>
+                        <li>
+                            <%= wish %>
+                        </li>
+                        <% }); %>
+                </ul>
+                <% } %>
+                    <a href="/wellwishes">Send Well Wishes</a>
 </body>
 
 </html>
