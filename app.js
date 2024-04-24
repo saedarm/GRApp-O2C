@@ -15,6 +15,10 @@ let currentImage = originalImage; // Current image to display
 let revealImage = false; // Flag to determine whether to reveal the image
 let wellWishes = []; // Array to store well wishes
 
+// Set view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -37,16 +41,11 @@ app.post('/reveal', (req, res) => {
 
 // Route to display results along with the image and well wishes
 app.get('/results', (req, res) => {
-  let secretDisplay = secret ? `<p>It's a: ${secret}!!!</p>` : '';
-  let imageDisplay = revealImage ? `<img src="${currentImage}" alt="Reveal Image" width="400">` : `<img src="${originalImage}" alt="Original Image" width="400">`;
-  let wellWishesDisplay = wellWishes.length > 0 ? `<h2>Well Wishes</h2><ul>${wellWishes.map(wish => `<li>${wish}</li>`).join('')}</ul>` : '';
-  res.send(`
-    <h1>Gender Reveal</h1>
-    ${imageDisplay}
-    ${secretDisplay}
-    ${wellWishesDisplay}
-    <a href="/wellwishes">Send Well Wishes to Louis</a>
-  `);
+  res.render('results', {
+    secret: secret,
+    currentImage: currentImage,
+    wellWishes: wellWishes
+  });
 });
 
 // Route to send well wishes
@@ -68,18 +67,13 @@ app.get('/', (req, res) => {
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  res.status(404).send("Sorry can't find that!")
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  console.error(err.stack);
+  res.status(500).send('Something broke!')
 });
 
 module.exports = app;
