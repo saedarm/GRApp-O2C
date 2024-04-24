@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const livereload = require('livereload');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,8 +17,7 @@ let wellWishes = []; // Array to store well wishes
 
 
 // Livereload setup
-const livereloadServer = livereload.createServer();
-livereloadServer.watch(__dirname + "/public");
+
 
 // Set view engine
 app.set('view engine', 'ejs');
@@ -26,6 +25,23 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+if (process.env.NODE_ENV === "development") {
+  var livereload = require("livereload");
+  var connectLiveReload = require("connect-livereload");
+
+  const liveReloadServer = livereload.createServer();
+  liveReloadServer.watch(path.join(__dirname, "public"));
+  liveReloadServer.server.once("connection", () => {
+    setTimeout(() => {
+      liveReloadServer.refresh("/");
+    }, 100);
+  });
+  app.use(connectLiveReload());
+}
+
+
 
 // Route to serve the form for inputting the secret
 app.get('/input', (req, res) => {
