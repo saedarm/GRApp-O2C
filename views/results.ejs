@@ -27,12 +27,12 @@
                 if (countdown <= 0) {
                     clearInterval(countdownInterval);
                     document.getElementById('reveal-image').querySelector('img').style.display = 'none';
-          <% if (secret === 'boy') { %>
+                    if (secret === 'boy') {
                         document.getElementById('gender-image-1').style.display = 'block';
-          <% } else { %>
+                    } else {
                         document.getElementById('gender-image-2').style.display = 'block';
-          <% } %>
-        }
+                    }
+                }
             }, 1000);
         </script>
         <% } %>
