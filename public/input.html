@@ -5,14 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secret Window!</title>
+    <title>Gender Reveal</title>
 </head>
 
 <body>
-    <h1>Input Gender Here Louis! </h1>
-    <form action="/reveal" method="post">
-        <label for="secret">Secret Baby Gender:</label><br>
-        <input type="text" id="secret" name="secret"><br><br>
+    <form action="/reveal" method="POST">
+        <label for="secret">Enter the secret:</label><br>
+        <input type="text" id="secret" name="secret"><br>
         <input type="submit" value="Submit">
     </form>
 </body>

@@ -44,6 +44,7 @@ app.get('/results', (req, res) => {
   res.render('results', {
     secret: secret,
     currentImage: currentImage,
+    revealImage: revealImage, // Pass revealImage to the template
     wellWishes: wellWishes
   });
 });
