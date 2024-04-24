@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-
+const livereload = require('livereload');
 const app = express();
-
+const PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -14,6 +14,11 @@ let image2 = '/gender_reveal_2.jpg'; // Path to the second image file
 let currentImage = originalImage; // Current image to display
 let revealImage = false; // Flag to determine whether to reveal the image
 let wellWishes = []; // Array to store well wishes
+
+
+// Livereload setup
+const livereloadServer = livereload.createServer();
+livereloadServer.watch(__dirname + "/public");
 
 // Set view engine
 app.set('view engine', 'ejs');
@@ -76,5 +81,6 @@ app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!')
 });
+
 
 module.exports = app;
