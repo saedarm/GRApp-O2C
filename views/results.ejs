@@ -18,9 +18,21 @@
                 <p id="secret-revealed" style="display: none;">Secret Revealed: <%= secret %>
                 </p>
                 <% } else { %>
-                    <img src="<%= currentImage %>" alt="Original Image" width="400">
+                    <img src="/1628017469449.jpg" alt="Original Image" width="400">
                     <% } %>
         </div>
+        <h2>Well Wishes</h2>
+        <ul id="wellWishesList">
+            <% wellWishes.forEach(function (wish) { %>
+                <li>
+                    <%= wish %>
+                </li>
+                <% }); %>
+        </ul>
+        <form id="wellWishesForm">
+            <textarea id="wellWishes" rows="4" cols="50" placeholder="Enter your well wishes here"></textarea><br>
+            <input type="submit" value="Send">
+        </form>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var countdownElement = document.getElementById('timer');
@@ -44,33 +56,39 @@
                 }
 
                 startCountdown();
+
+                // Function to display well wishes
+                function displayWellWish(message) {
+                    var list = document.getElementById('wellWishesList');
+                    var listItem = document.createElement('li');
+                    listItem.textContent = message;
+                    list.appendChild(listItem);
+                }
+
+                // AJAX for submitting well wishes form
+                var form = document.getElementById('wellWishesForm');
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    var message = document.getElementById('wellWishes').value;
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/wellwishes', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            displayWellWish(response.message);
+                            document.getElementById('wellWishes').value = ''; // Clear the input field
+                        }
+                    };
+                    xhr.send(JSON.stringify({ message: message }));
+                });
             });
         </script>
         <% } else { %>
             <div id="reveal-image">
-                <img src="<%= originalImage %>" alt="Original Image" width="400">
+                <img src="/1628017469449.jpg" alt="Original Image" width="400">
             </div>
             <% } %>
-
-                <% if (wellWishes.length> 0) { %>
-                    <h2>Well Wishes</h2>
-                    <ul>
-                        <% wellWishes.forEach(function (wish) { %>
-                            <li>
-                                <%= wish %>
-                            </li>
-                            <% }); %>
-                    </ul>
-                    <% } %>
-                        <a href="/wellwishes">Send Well Wishes</a>
-
-                        <!-- Include well wishes form -->
-                        <h2>Send Well Wishes</h2>
-                        <form action="/wellwishes" method="post">
-                            <textarea name="messages" rows="4" cols="50"
-                                placeholder="Enter your well wishes here"></textarea><br>
-                            <input type="submit" value="Send">
-                        </form>
 </body>
 
 </html>
