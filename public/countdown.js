@@ -19,6 +19,5 @@ function startCountdown() {
 // Function to reveal the image
 function revealImage() {
     document.getElementById('countdown').style.display = 'none';
-    document.getElementById('reveal-image').style.display = 'block';
-    document.getElementById('secret-revealed').style.display = 'block';
+    document.getElementById('reveal-image').innerHTML = '<img src="<%= currentImage %>" alt="Reveal Image" width="400"><p id="secret-revealed">Secret Revealed: <%= secret %></p>';
 }
