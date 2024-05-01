@@ -21,37 +21,11 @@
                     <img src="/1628017469449.jpg" alt="Original Image" width="400">
                     <% } %>
         </div>
+        <script src="/countdown.js"></script>
         <script>
-            // Countdown timer
-            var countdownElement = document.getElementById('timer');
-            var countdownInterval = null;
-
-            // Function to start countdown
-            function startCountdown() {
-                var countdown = 10; // Countdown time in seconds
-                countdownInterval = setInterval(function () {
-                    countdown--;
-                    countdownElement.textContent = countdown;
-                    if (countdown <= 0) {
-                        clearInterval(countdownInterval);
-                        revealImage();
-                    }
-                }, 1000);
-            }
-
-            // Function to reveal the image
-            function revealImage() {
-                document.getElementById('countdown').style.display = 'none';
-                document.getElementById('reveal-image').style.display = 'block';
-                document.getElementById('secret-revealed').style.display = 'block';
-            }
-
             // Start countdown only if revealImage is true
             document.addEventListener('DOMContentLoaded', function () {
-                var countdownElement = document.getElementById('timer');
-                if (countdownElement.textContent !== "10") {
-                    startCountdown();
-                }
+                startCountdown();
             });
         </script>
         <% } else { %>
