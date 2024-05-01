@@ -23,9 +23,12 @@
         </div>
         <script src="/countdown.js"></script>
         <script>
-            // Start countdown only if revealImage is true
             document.addEventListener('DOMContentLoaded', function () {
-                startCountdown();
+                // Start countdown only if it's not already running
+                var countdownElement = document.getElementById('timer');
+                if (countdownElement.textContent === "10") {
+                    startCountdown();
+                }
             });
         </script>
         <% } else { %>
@@ -36,7 +39,7 @@
                 <% if (wellWishes.length> 0) { %>
                     <h2>Well Wishes</h2>
                     <ul>
-                        <% wellWishes.forEach(function(wish) { %>
+                        <% wellWishes.forEach(function (wish) { %>
                             <li>
                                 <%= wish %>
                             </li>
