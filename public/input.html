@@ -14,6 +14,40 @@
         <input type="text" id="secret" name="secret"><br>
         <input type="submit" value="Submit">
     </form>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var countdownElement = document.getElementById('timer');
+            if (countdownElement.textContent === "10") {
+                startCountdown();
+            }
+        });
+
+        // Countdown timer
+        var countdownElement = document.getElementById('timer');
+        var countdownInterval = null;
+
+        // Function to start countdown
+        function startCountdown() {
+            var countdown = 10; // Countdown time in seconds
+            countdownInterval = setInterval(function () {
+                countdown--;
+                countdownElement.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    revealImage();
+                }
+            }, 1000);
+        }
+
+        // Function to reveal the image
+        function revealImage() {
+            document.getElementById('countdown').style.display = 'none';
+            document.getElementById('reveal-image').style.display = 'block';
+            document.getElementById('secret-revealed').style.display = 'block';
+        }
+    </script>
 </body>
 
 </html>

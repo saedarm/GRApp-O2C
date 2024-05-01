@@ -48,7 +48,10 @@
 
             // Start countdown only if revealImage is true
             document.addEventListener('DOMContentLoaded', function () {
-                startCountdown();
+                var countdownElement = document.getElementById('timer');
+                if (countdownElement.textContent !== "10") {
+                    startCountdown();
+                }
             });
         </script>
         <% } else { %>
@@ -67,17 +70,6 @@
                     </ul>
                     <% } %>
                         <a href="/wellwishes">Send Well Wishes</a>
-
-                        <script>
-                            // Function to start countdown when input is submitted
-                            document.addEventListener('DOMContentLoaded', function () {
-                                document.querySelector('form').addEventListener('submit', function (event) {
-                                    event.preventDefault();
-                                    startCountdown();
-                                });
-                            });
-                        </script>
-
 </body>
 
 </html>
