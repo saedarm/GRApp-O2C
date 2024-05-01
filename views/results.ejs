@@ -29,65 +29,55 @@
                 </li>
                 <% }); %>
         </ul>
-        <form id="wellWishesForm">
+        <form id="wellWishesForm" style="display: none;">
             <textarea id="wellWishes" rows="4" cols="50" placeholder="Enter your well wishes here"></textarea><br>
-            <input type="submit" value="Send">
+            <input type="submit" value="Send Well Wishes">
         </form>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var countdownElement = document.getElementById('timer');
-                var countdownInterval = null;
-
-                function startCountdown() {
-                    var countdown = 10; // Countdown time in seconds
-                    countdownInterval = setInterval(function () {
-                        countdown--;
-                        countdownElement.textContent = countdown;
-                        if (countdown <= 0) {
-                            clearInterval(countdownInterval);
-                            revealImage();
-                        }
-                    }, 1000);
-                }
-
-                function revealImage() {
-                    document.getElementById('countdown').style.display = 'none';
-                    document.getElementById('reveal-image').innerHTML = '<img src="<%= currentImage %>" alt="Reveal Image" width="400"><p id="secret-revealed">Secret Revealed: <%= secret %></p>';
-                }
-
-                startCountdown();
-
-                // Function to display well wishes
-                function displayWellWish(message) {
-                    var list = document.getElementById('wellWishesList');
-                    var listItem = document.createElement('li');
-                    listItem.textContent = message;
-                    list.appendChild(listItem);
-                }
-
-                // AJAX for submitting well wishes form
-                var form = document.getElementById('wellWishesForm');
-                form.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    var message = document.getElementById('wellWishes').value;
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', '/wellwishes', true);
-                    xhr.setRequestHeader('Content-Type', 'application/json');
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
-                            var response = JSON.parse(xhr.responseText);
-                            displayWellWish(response.message);
-                            document.getElementById('wellWishes').value = ''; // Clear the input field
-                        }
-                    };
-                    xhr.send(JSON.stringify({ message: message }));
-                });
-            });
-        </script>
         <% } else { %>
             <div id="reveal-image">
                 <img src="/1628017469449.jpg" alt="Original Image" width="400">
             </div>
+            <h2>Well Wishes</h2>
+            <ul id="wellWishesList">
+                <% wellWishes.forEach(function (wish) { %>
+                    <li>
+                        <%= wish %>
+                    </li>
+                    <% }); %>
+            </ul>
+            <form id="wellWishesForm">
+                <textarea id="wellWishes" rows="4" cols="50" placeholder="Enter your well wishes here"></textarea><br>
+                <input type="submit" value="Send Well Wishes">
+            </form>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Function to display well wishes
+                    function displayWellWish(message) {
+                        var list = document.getElementById('wellWishesList');
+                        var listItem = document.createElement('li');
+                        listItem.textContent = message;
+                        list.appendChild(listItem);
+                    }
+
+                    // AJAX for submitting well wishes form
+                    var form = document.getElementById('wellWishesForm');
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        var message = document.getElementById('wellWishes').value;
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '/wellwishes', true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                displayWellWish(response.message);
+                                document.getElementById('wellWishes').value = ''; // Clear the input field
+                            }
+                        };
+                        xhr.send(JSON.stringify({ message: message }));
+                    });
+                });
+            </script>
             <% } %>
 </body>
 
