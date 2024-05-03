@@ -37,4 +37,11 @@ app.post('/wellwishes', (req, res) => {
   res.json({ message: message });
 });
 
+// New route for handling well wishes form submission
+app.post('/wellwishes', (req, res) => {
+  let message = req.body.message;
+  wellWishes.push(message);
+  res.json({ message: message });
+});
+
 module.exports = app;
