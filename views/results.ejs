@@ -6,23 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gender Reveal</title>
-    <style>
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        span {
-            display: inline-block;
-            background-color: #f2f2f2;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 
 <body>
@@ -38,69 +21,12 @@
                     <img src="/1628017469449.jpg" alt="Original Image" width="400">
                     <% } %>
         </div>
-        <h2>Well Wishes</h2>
-        <ul id="wellWishesList">
-            <% wellWishes.forEach(function (wish) { %>
-                <li>
-                    <span>
-                        <%= wish %>
-                    </span>
-                </li>
-                <% }); %>
-        </ul>
-        <form id="wellWishesForm">
-            <textarea id="message" rows="4" cols="50" placeholder="Enter your well wishes here"></textarea><br>
-            <input type="submit" value="Send Well Wishes">
-        </form>
+        <a href="/babychain">Generate Baby Names</a>
         <% } else { %>
             <div id="reveal-image">
                 <img src="/1628017469449.jpg" alt="Original Image" width="400">
             </div>
-            <h2>Well Wishes</h2>
-            <ul id="wellWishesList">
-                <% wellWishes.forEach(function (wish) { %>
-                    <li>
-                        <span>
-                            <%= wish %>
-                        </span>
-                    </li>
-                    <% }); %>
-            </ul>
-            <form id="wellWishesForm">
-                <textarea id="message" rows="4" cols="50" placeholder="Enter your well wishes here"></textarea><br>
-                <input type="submit" value="Send Well Wishes">
-            </form>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    // Function to display well wishes
-                    function displayWellWish(message) {
-                        var list = document.getElementById('wellWishesList');
-                        var listItem = document.createElement('li');
-                        var span = document.createElement('span');
-                        span.textContent = message;
-                        listItem.appendChild(span);
-                        list.insertBefore(listItem, list.firstChild); // Insert at the top of the list
-                    }
-
-                    // AJAX for submitting well wishes form
-                    var form = document.getElementById('wellWishesForm');
-                    form.addEventListener('submit', function (event) {
-                        event.preventDefault();
-                        var message = document.getElementById('message').value;
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', '/wellwishes', true);
-                        xhr.setRequestHeader('Content-Type', 'application/json');
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState == 4 && xhr.status == 200) {
-                                var response = JSON.parse(xhr.responseText);
-                                displayWellWish(response.message);
-                                document.getElementById('message').value = ''; // Clear the input field
-                            }
-                        };
-                        xhr.send(JSON.stringify({ message: message }));
-                    });
-                });
-            </script>
+            <a href="/babychain">Generate Baby Names</a>
             <% } %>
 </body>
 

@@ -13,10 +13,9 @@ let image1 = '/gender_reveal_1.jpg'; // Path to the first image file
 let image2 = '/gender_reveal_2.jpg'; // Path to the second image file
 let currentImage = originalImage; // Current image to display
 let revealImage = false; // Flag to determine whether to reveal the image
-let wellWishes = []; // Array to store well wishes
 
 app.get('/', (req, res) => {
-  res.render('results', { secret: null, revealImage: false, currentImage: originalImage, wellWishes: wellWishes });
+  res.render('results', { secret: null, revealImage: false, currentImage: originalImage });
 });
 
 app.post('/reveal', (req, res) => {
@@ -28,20 +27,11 @@ app.post('/reveal', (req, res) => {
     currentImage = image2;
     revealImage = true;
   }
-  res.render('results', { secret, revealImage, currentImage, wellWishes: wellWishes });
+  res.render('results', { secret, revealImage, currentImage });
 });
 
-app.post('/wellwishes', (req, res) => {
-  let message = req.body.message;
-  wellWishes.push(message);
-  res.json({ message: message });
-});
-
-// New route for handling well wishes form submission
-app.post('/wellwishes', (req, res) => {
-  let message = req.body.message;
-  wellWishes.push(message);
-  res.json({ message: message });
+app.get('/babychain', (req, res) => {
+  res.render('babychain');
 });
 
 module.exports = app;
